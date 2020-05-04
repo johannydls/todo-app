@@ -11,4 +11,4 @@ export default props => (
     <Menu />
     <Routes />
   </div>
-)
+);

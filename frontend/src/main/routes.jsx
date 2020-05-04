@@ -10,4 +10,4 @@ export default props => (
     <Route path="/about" component={About} />
     <Redirect from='*' to="/todos" />
   </Router>
-)
+);
