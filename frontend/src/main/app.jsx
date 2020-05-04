@@ -3,12 +3,12 @@ import 'modules/font-awesome/css/font-awesome.min.css';
 
 import React from 'react';
 
-import Todo from '../todo/Todo';
-import About from '../about/About';
+import Menu from '../template/Menu';
+import Routes from '../main/routes';
 
 export default props => (
   <div className="container">
-    <Todo />
-    <About />
+    <Menu />
+    <Routes />
   </div>
 )
