@@ -14,6 +14,19 @@
   background: #ffebbf;
 }
 
-table tr td.updated {
+.tableUpdated {
   text-align: center;
+  width: 145px;
+}
+
+.tableActions {
+  width: 105px;
+}
+
+.tableCreated {
+  width: 152px;
+}
+
+.todoForm {
+  padding-bottom: 40px;
 }
