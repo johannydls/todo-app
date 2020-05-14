@@ -32,6 +32,8 @@
   },
   "dependencies": {
     "moment": "^2.25.3",
-    "react-moment": "^0.9.7"
+    "react-moment": "^0.9.7",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0"
   }
 }
