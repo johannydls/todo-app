@@ -76,14 +76,12 @@ export default class Todo extends Component {
             name="Tarefas" 
             small="Cadastro" />
         <TodoForm 
-            description={this.state.description} 
             handleAdd={this.handleAdd}
             handleChange={this.handleChange}
             handleSearch={this.handleSearch}
             handleClear={this.handleClear}
             search={this.state.search} />
         <TodoList 
-            list={this.state.list} 
             handleRemove={this.handleRemove}
             handleChangeStatus={this.handleChangeStatus} />
       </div>

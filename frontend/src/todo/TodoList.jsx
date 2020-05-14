@@ -1,13 +1,16 @@
 import React from 'react';
 import moment from 'moment';
 
+import { connect } from 'react-redux';
+
 import IconButton from '../template/IconButton';
 
-export default props => {
+function TodoList(props) {
+
   const renderRows = () => {
     const list = props.list || [];
 
-    return props.list.map(todo => {
+    return list.map(todo => {
         return (
           <tr key={todo._id} className={todo.done ? 'trDone' : 'trPending'}>
             <td className={todo.done ? 'markedAsDone' : ''}>{todo.description}</td>
@@ -42,3 +45,11 @@ export default props => {
     </table>
   );
 };
+
+function mapStateToProps(state) {
+  return {
+    list: state.todo.list
+  }
+}
+
+export default connect(mapStateToProps)(TodoList);
