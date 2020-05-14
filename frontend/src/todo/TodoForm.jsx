@@ -1,5 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { changeDescription } from '../store/actions/todos';
 
 import Grid from '../template/Grid';
 import IconButton from '../template/IconButton';
@@ -20,7 +23,7 @@ function TodoForm(props) {
         <input id="description" className="form-control" type="text"
           placeholder="Adicione uma tarefa" 
           value={props.description}
-          onChange={props.handleChange}
+          onChange={props.changeDescription}
           onKeyUp={keyHandler} />
       </Grid>
 
@@ -50,4 +53,11 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(TodoForm);
+// No onChange, usa-se diretamente o 
+// changeDescription, e na action, muda o payload 
+// para event.target.value
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ changeDescription }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);

@@ -1,5 +1,6 @@
+import { CHANGE_DESCRIPTION } from '../actions/actionTypes';
 
-const initialState = {
+const INITIAL_STATE = {
   description: 'Ler livro',
   list: [
     { _id: 1, description: 'Pagar fatura do cartão', done: true },
@@ -8,7 +9,17 @@ const initialState = {
   ]
 }
 
-export default function(state = initialState, action) {
+export default function(state = INITIAL_STATE, action) {
   console.log(state, action);
-  return state;
+
+  switch(action.type) {
+    case CHANGE_DESCRIPTION:
+      return {
+        ...state,
+        description: action.payload
+      }
+
+    default:
+      return state;
+  }
 };
