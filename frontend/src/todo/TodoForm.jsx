@@ -1,55 +1,89 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { changeDescription } from '../store/actions/todos';
+// Action creators
+import { 
+  changeDescription, 
+  searchTodo,
+  searchTodoView, 
+  addTodo,
+  clear
+} from '../store/actions/todos';
 
 import Grid from '../template/Grid';
 import IconButton from '../template/IconButton';
 
-function TodoForm(props) {
+class TodoForm extends Component {
+  constructor(props) {
+    super(props);
+    this.keyHandler = this.keyHandler.bind(this);
+    this.handleClear = this.handleClear.bind(this);
+  }
 
-  const keyHandler = (e) => {
+  keyHandler(e) {
+    const { addTodo, searchTodo, description, searchTodoView } = this.props;
     if (e.key ===   'Enter') {
-      e.shiftKey ? props.handleSearch() : props.handleAdd();
+      if (e.shiftKey) {
+        searchTodo();
+        searchTodoView();
+      } else {
+        addTodo(description);
+      }
     } else if (e.key === 'Escape') {
-      props.handleClear();
+      this.handleClear();
     }
   }
 
-  return (
-    <div role="form" className="todoForm row">
-      <Grid cols="12 9 10">
-        <input id="description" className="form-control" type="text"
-          placeholder="Adicione uma tarefa" 
-          value={props.description}
-          onChange={props.changeDescription}
-          onKeyUp={keyHandler} />
-      </Grid>
+  handleClear() {
+    this.props.searchTodoView(false);
+    this.props.clear();
+    this.props.searchTodo();
+  }
 
-      <Grid cols="12 3 2">
-        <IconButton 
-            style="primary" 
-            icon="plus" 
-            onClick={props.handleAdd} />
-        <IconButton 
-            style="info" 
-            icon="search"
-            hide={props.search} 
-            onClick={props.handleSearch} />
-        <IconButton 
-            style="default" 
-            icon="close"
-            hide={!props.search} 
-            onClick={props.handleClear} />
-      </Grid>
-    </div>
-  );
+  // Método de ciclo de vida, executa sempre que o componente é exibido
+  componentWillMount() {
+    this.props.searchTodo();
+  }
+
+  render() {
+    const { addTodo, searchTodo, description, search, searchTodoView } = this.props;
+
+    return (
+      <div role="form" className="todoForm row">
+        <Grid cols="12 9 10">
+          <input id="description" className="form-control" type="text"
+            placeholder="Adicione uma tarefa" 
+            value={this.props.description}
+            onChange={this.props.changeDescription}
+            onKeyUp={this.keyHandler} />
+        </Grid>
+  
+        <Grid cols="12 3 2">
+          <IconButton 
+              style="primary" 
+              icon="plus" 
+              onClick={() => addTodo(description)} />
+          <IconButton 
+              style="info" 
+              icon="search"
+              hide={search} 
+              onClick={() => { searchTodo(); searchTodoView(true) }} />
+          <IconButton 
+              style="default" 
+              icon="close"
+              hide={!search} 
+              onClick={() => this.handleClear()} />
+        </Grid>
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state) {
   return {
-    description: state.todo.description
+    description: state.todo.description,
+    search: state.todo.search
   }
 }
 
@@ -57,7 +91,13 @@ function mapStateToProps(state) {
 // changeDescription, e na action, muda o payload 
 // para event.target.value
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeDescription }, dispatch);
+  return bindActionCreators({ 
+    changeDescription, 
+    searchTodo,
+    searchTodoView,
+    addTodo,
+    clear
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);

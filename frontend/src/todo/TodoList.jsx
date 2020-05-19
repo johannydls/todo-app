@@ -2,6 +2,12 @@ import React from 'react';
 import moment from 'moment';
 
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {
+  changeStatus,
+  removeTodo
+} from '../store/actions/todos.js';
 
 import IconButton from '../template/IconButton';
 
@@ -18,11 +24,11 @@ function TodoList(props) {
             <td className="tableUpdated">{moment(todo.updated_at).locale('pt-BR').startOf('minutes').fromNow()}</td>
             <td>
               <IconButton style="success" icon="check" hide={todo.done}
-                onClick={() => props.handleChangeStatus(todo)} />
+                onClick={() => props.changeStatus(todo)} />
               <IconButton style="warning" icon="undo" hide={!todo.done}
-                onClick={() => props.handleChangeStatus(todo)} />
+                onClick={() => props.changeStatus(todo)} />
               <IconButton style="danger" icon="trash-o" hide={!todo.done}
-                onClick={() => props.handleRemove(todo)} />
+                onClick={() => props.removeTodo(todo)} />
             </td>
           </tr>
         )
@@ -52,4 +58,11 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(TodoList);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    changeStatus,
+    removeTodo
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
