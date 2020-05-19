@@ -22,11 +22,11 @@ class TodoForm extends Component {
   }
 
   keyHandler(e) {
-    const { addTodo, searchTodo, description, searchTodoView } = this.props;
+    const { addTodo, searchTodo, searchTodoView, description } = this.props;
     if (e.key ===   'Enter') {
       if (e.shiftKey) {
         searchTodo();
-        searchTodoView();
+        searchTodoView(true);
       } else {
         addTodo(description);
       }
@@ -38,7 +38,6 @@ class TodoForm extends Component {
   handleClear() {
     this.props.searchTodoView(false);
     this.props.clear();
-    this.props.searchTodo();
   }
 
   // Método de ciclo de vida, executa sempre que o componente é exibido

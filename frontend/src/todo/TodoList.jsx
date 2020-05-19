@@ -15,7 +15,7 @@ function TodoList(props) {
 
   const renderRows = () => {
     const list = props.list || [];
-
+    const searchedItem = props.searchedItem;
     return list.map(todo => {
         return (
           <tr key={todo._id} className={todo.done ? 'trDone' : 'trPending'}>
@@ -24,9 +24,9 @@ function TodoList(props) {
             <td className="tableUpdated">{moment(todo.updated_at).locale('pt-BR').startOf('minutes').fromNow()}</td>
             <td>
               <IconButton style="success" icon="check" hide={todo.done}
-                onClick={() => props.changeStatus(todo)} />
+                onClick={() => props.changeStatus(todo, searchedItem)} />
               <IconButton style="warning" icon="undo" hide={!todo.done}
-                onClick={() => props.changeStatus(todo)} />
+                onClick={() => props.changeStatus(todo, searchedItem)} />
               <IconButton style="danger" icon="trash-o" hide={!todo.done}
                 onClick={() => props.removeTodo(todo)} />
             </td>
@@ -54,7 +54,8 @@ function TodoList(props) {
 
 function mapStateToProps(state) {
   return {
-    list: state.todo.list
+    list: state.todo.list,
+    searchedItem: state.todo.description
   }
 }
 

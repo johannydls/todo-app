@@ -12,7 +12,6 @@ const INITIAL_STATE = {
 }
 
 export default function(state = INITIAL_STATE, action) {
-  console.log(state, action);
 
   switch(action.type) {
     case DESCRIPTION_CHANGED:
@@ -24,7 +23,7 @@ export default function(state = INITIAL_STATE, action) {
     case TODO_SEARCHED:
       return {
         ...state,
-        list: action.payload.data
+        list: action.payload
       }
 
     case TODO_SEARCH_CHANGED:
