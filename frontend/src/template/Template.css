@@ -30,3 +30,16 @@
 .todoForm {
   padding-bottom: 40px;
 }
+
+.todoList--empty {
+  display: flex;
+  justify-content: center;
+}
+
+.todoList--empty h3 {
+  background: #bababa;
+  width: fit-content;
+  padding: 15px 25px;
+  border-radius: 25px;
+  font-size: 17px;
+}

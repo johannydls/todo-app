@@ -35,27 +35,44 @@ function TodoList(props) {
       });
   };
 
-  return (
-    <table className="table table-hover table-responsive">
-      <thead>
-        <tr>
-          <th>Descrição</th>
-          <th className="tableCreated">Data de criação</th>
-          <th>Última atualização</th>
-          <th className='tableActions'>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        {renderRows()}
-      </tbody>
-    </table>
-  );
+  if (props.list && props.list.length > 0) {
+    return (
+      <table className="table table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th className="tableCreated">Data de criação</th>
+            <th>Última atualização</th>
+            <th className='tableActions'>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {renderRows()}
+        </tbody>
+      </table>
+    );
+  } else {
+    if (props.isSearch) {
+      return (
+        <div className="todoList--empty">
+          <h3>Nem item retornado na busca!</h3>
+        </div>
+      )
+    } else {
+      return (
+        <div className="todoList--empty">
+          <h3>Você não tem tarefas!</h3>
+        </div>
+      )
+    }
+  }
 };
 
 function mapStateToProps(state) {
   return {
     list: state.todo.list,
-    searchedItem: state.todo.description
+    searchedItem: state.todo.description,
+    isSearch: state.todo.search
   }
 }
 
